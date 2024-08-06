@@ -5,7 +5,7 @@
 
 struct Node* head = NULL;
 
-void addStudent_linkedList(const struct student *const ptr)
+void addStudent_linkedList(const struct student* const ptr)
 {
 
 	if(studentIDExists(ptr->id))
@@ -14,7 +14,7 @@ void addStudent_linkedList(const struct student *const ptr)
 		return;
 	}
 
-	struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
 
 	if(newNode == NULL)
 	{
@@ -35,7 +35,7 @@ void addStudent_linkedList(const struct student *const ptr)
 		return;
 	}
 
-	struct Node *current = head;
+	struct Node* current = head;
 
 	while(current->next != NULL)
 	{
@@ -53,7 +53,7 @@ void displayStudents(void)
 		return;
 	}
 
-	struct Node *current = head;
+	struct Node* current = head;
 
 	while(current != NULL)
 	{
@@ -70,7 +70,7 @@ void searchStudentByID_linkedList(uint32 id)
 		return;
 	}
 
-	struct Node *target = head;
+	struct Node* target = head;
 
 	while(target != NULL)
 	{
@@ -88,7 +88,7 @@ void searchStudentByID_linkedList(uint32 id)
 
 void updateStudent_linkedList(uint32 id)
 {
-	struct Node *temp = head;
+	struct Node* temp = head;
 
 	while(temp != NULL)
 	{
@@ -106,7 +106,17 @@ void updateStudent_linkedList(uint32 id)
 	}
 
 	printf("Enter New Name : \n");
-	scanf("%s", temp->data.name);
+	// scanf("%s", temp->data.name);
+
+	// To accept inputs with spaces from user.
+	while(getchar() != '\n');
+	fgets(temp->data.name, sizeof(temp->data.name), stdin);
+	size_t len = strlen(temp->data.name);
+
+	if(len > ZERO && temp->data.name[len - 1] == '\n')
+	{
+		temp->data.name[len - 1] = '\0';
+	}
 
 	printf("Enter New Age : \n");
 	scanf("%ld", &temp->data.age);
@@ -183,7 +193,7 @@ void searchHighestGPA(void)
 		return;
 	}
 
-	struct Node *temp = head;
+	struct Node* temp = head;
 	struct Node* maxGPASt = temp;
 	float32 maxGPA = temp->data.gpa;
 
@@ -206,14 +216,14 @@ void searchHighestGPA(void)
 
 }
 
-void printStudentData(const struct student *const ptr)
+void printStudentData(const struct student* const ptr)
 {
 	printf("[ ID : %ld | Name : %s | Age : %ld | GPA : %.1f ]\n",
-			ptr->id,
-			ptr->name,
-			ptr->age,
-			ptr->gpa
-			);
+		ptr->id,
+		ptr->name,
+		ptr->age,
+		ptr->gpa
+	);
 }
 
 bool studentIDExists(uint32 id)
